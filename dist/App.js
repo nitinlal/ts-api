@@ -3,7 +3,8 @@ const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const HeroRouter_1 = require("./routes/HeroRouter");
-const Mongo = require('mongodb').MongoClient;
+const Auth_1 = require("./routes/Auth");
+const mongoose = require('mongoose');
 class App {
     constructor() {
         this.express = express();
@@ -14,13 +15,11 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
-        //set up Mongo
-        Mongo.connect('mongodb://localhost:27017/users_test', (err, db) => {
+        mongoose.connect('mongodb://localhost:27017/users_test', (err, database) => {
             if (err) {
-                console.log('error connecting to Mongo db');
                 throw err;
             }
-            console.log('Mongo Connection Successfully Set Up...');
+            console.log('Mongoose Connection Successfully established...');
         });
     }
     routes() {
@@ -31,6 +30,7 @@ class App {
             });
         });
         this.express.use('/', router);
+        this.express.user('/login', Auth_1.default);
         this.express.use('/api/v1/heroes', HeroRouter_1.default);
     }
 }

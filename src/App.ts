@@ -2,7 +2,9 @@ import * as express from "express";
 import * as logger from "morgan";
 import * as bodyParser from "body-parser";
 import HeroRouter from './routes/HeroRouter';
-const Mongo = require('mongodb').MongoClient;
+import AuthRouter from './routes/Auth';
+import {AuthRouter} from './routes/Auth';
+const mongoose = require('mongoose');
 
 class App {
   public express: express.Application;
@@ -18,13 +20,11 @@ class App {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
 
-    //set up Mongo
-    Mongo.connect('mongodb://localhost:27017/users_test', (err, db) => {
+    mongoose.connect('mongodb://localhost:27017/users_test', (err, database) => {
       if (err) {
-        console.log('error connecting to Mongo db');
         throw err;
       }
-      console.log('Mongo Connection Successfully Set Up...');
+      console.log('Mongoose Connection Successfully established...');
     });
   }
 
@@ -36,6 +36,7 @@ class App {
       });
     });
     this.express.use('/', router);
+    this.express.user('/login', AuthRouter);
     this.express.use('/api/v1/heroes', HeroRouter);
   }
 

@@ -1,24 +1,29 @@
 import e = require('express');
 import Router = e.Router;
 import passport = require('passport');
+import User from '../persistence/user';
+
 export class AuthRouter {
   router: Router;
 
   constructor() {
     this.router = Router();
-    this.init();  // initiate all route for this project
+    this.init();  // use this for oauth
   }
 
   init() {
-    this.router.post('/login', () => {
-      passport.authenticate('local'),
-        (req, res) => {
-          res.redirectStart('/users' + req.user.username);
-        }
-    });
+    console.log('Finding User from database...');
+    User.find();
+
+    /*this.router.post('/login', () => {
+     passport.authenticate('local'),
+     (req, res) => {
+     res.redirectStart('/users' + req.user.username);
+     }
+     });*/
+
   }
 }
 
 let auth = new AuthRouter();
-auth.init();
 export default auth.router;

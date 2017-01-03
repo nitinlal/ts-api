@@ -14,13 +14,18 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
-        //set up Mongo
-        Mongo.connect('mongodb://localhost:27017/users_test', (err, db) => {
+        Mongo.connect('mongodb://localhost:27017/users_test', (err, database) => {
             if (err) {
-                console.log('error connecting to Mongo db');
                 throw err;
             }
-            console.log('Mongo Connection Successfully Set Up...');
+            let db = database; // notice how a copy is being done to avoid direct changes
+            db.collection('users_test')
+                .find({}, (err, docs) => {
+                if (err) {
+                    throw err;
+                }
+                console.log('documents from db', docs);
+            });
         });
     }
     routes() {
