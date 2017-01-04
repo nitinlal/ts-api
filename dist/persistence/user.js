@@ -1,3 +1,4 @@
+"use strict";
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
@@ -5,4 +6,5 @@ const userSchema = new Schema({
     age: Number
 });
 const User = mongoose.model('user', userSchema);
-modules.export = User;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = User;

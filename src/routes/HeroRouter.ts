@@ -2,7 +2,6 @@ import e = require('express');
 import Router = e.Router;
 import NextFunction = e.NextFunction;
 import Response = e.Response;
-import {Heroes, default as heroes} from '../../data/Heroes';
 import Request = e.Request;
 
 class Hero {
@@ -10,13 +9,7 @@ class Hero {
 }
 export class HeroRouter {
   router: Router;
-  heroes: Array<Hero> = [
-    {name: "spider man"},
-    {name: 'super man'},
-    {name: 'flash'},
-    {name: 'reverse flash'},
-    {name: 'Wolverine'}
-  ];
+  heroes: Array<Object>;
 
   constructor() {
     this.router = Router();
@@ -25,10 +18,9 @@ export class HeroRouter {
 
   public getAll(req: Request, res: Response, next: NextFunction) {
     res.set('Content-Type', 'application/json');
-    res.send(heroes);
+    res.send(['superman', 'flash', 'Spiderman']);
   }
 
-  // no public so private by default
   init() {
     this.router.get('/', this.getAll);
   }

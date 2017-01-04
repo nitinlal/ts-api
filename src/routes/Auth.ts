@@ -1,6 +1,8 @@
 import e = require('express');
 import Router = e.Router;
-import passport = require('passport');
+import Request = e.Request;
+import Response = e.Response;
+import NextFunction = e.NextFunction;
 import User from '../persistence/user';
 
 export class AuthRouter {
@@ -11,10 +13,21 @@ export class AuthRouter {
     this.init();  // use this for oauth
   }
 
-  init() {
+  public getUser(req: Request, res: Response, next: NextFunction) {
     console.log('Finding User from database...');
-    User.find();
+    let user = User.find({
+      name: 'Nitin Lal'
+    }, (err, users) => {
+      if (err) {
+        throw err;
+      }
+      console.log('users from db...', users);
+    });
+    res.send(user);
+  }
 
+  init() {
+    this.router.get('/', this.getUser);
     /*this.router.post('/login', () => {
      passport.authenticate('local'),
      (req, res) => {
@@ -25,5 +38,6 @@ export class AuthRouter {
   }
 }
 
-let auth = new AuthRouter();
+const auth = new AuthRouter();
+//auth.init();
 export default auth.router;

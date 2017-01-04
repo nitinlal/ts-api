@@ -30,8 +30,8 @@ class App {
             });
         });
         this.express.use('/', router);
-        this.express.user('/login', Auth_1.default);
         this.express.use('/api/v1/heroes', HeroRouter_1.default);
+        this.express.use('/login', Auth_1.default);
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

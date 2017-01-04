@@ -7,9 +7,20 @@ class AuthRouter {
         this.router = Router();
         this.init(); // use this for oauth
     }
-    init() {
+    getUser(req, res, next) {
         console.log('Finding User from database...');
-        user_1.default.find();
+        let user = user_1.default.find({
+            name: 'Nitin Lal'
+        }, (err, users) => {
+            if (err) {
+                throw err;
+            }
+            console.log('users from db...', users);
+        });
+        res.send(user);
+    }
+    init() {
+        this.router.get('/', this.getUser);
         /*this.router.post('/login', () => {
          passport.authenticate('local'),
          (req, res) => {
@@ -19,6 +30,7 @@ class AuthRouter {
     }
 }
 exports.AuthRouter = AuthRouter;
-let auth = new AuthRouter();
+const auth = new AuthRouter();
 Object.defineProperty(exports, "__esModule", { value: true });
+//auth.init();
 exports.default = auth.router;

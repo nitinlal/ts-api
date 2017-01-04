@@ -3,7 +3,6 @@ import * as logger from "morgan";
 import * as bodyParser from "body-parser";
 import HeroRouter from './routes/HeroRouter';
 import AuthRouter from './routes/Auth';
-import {AuthRouter} from './routes/Auth';
 const mongoose = require('mongoose');
 
 class App {
@@ -35,9 +34,10 @@ class App {
         message: 'Hello World!'
       });
     });
+
     this.express.use('/', router);
-    this.express.user('/login', AuthRouter);
     this.express.use('/api/v1/heroes', HeroRouter);
+    this.express.use('/login', AuthRouter);
   }
 
 }
