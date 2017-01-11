@@ -17,7 +17,7 @@ class AuthRouter {
             }
             console.log('users from db...', users);
         });
-        res.send(user);
+        res.send(JSON.parse(user));
     }
     init() {
         this.router.get('/', this.getUser);

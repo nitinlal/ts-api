@@ -15,7 +15,12 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
-        mongoose.connect('mongodb://localhost:27017/users_test', (err, database) => {
+        this.express.use((req, res, next) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
+        mongoose.connect('mongodb://localhost:27017/users_test/users_test', (err, database) => {
             if (err) {
                 throw err;
             }

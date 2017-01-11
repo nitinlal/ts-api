@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <h4>test</h4>
+</head>
+<body>
+
+  <button class="btn">Click!</button>
+  <div class="label">default label</div>
+  <script>
+
+    var Rx = require('rxjs');
+    var button = document.querySelector('.button');
+    var label = document.querySelector('.label');
+
+    var clickStream = Rx.Observable.fromEvent(button, 'click'); // stream all the events from the click stream
+
+    var doubleClickStream = clickStream
+      .buffer(() => clickStream.throttle(250)) // end the buffer
+      .map(arr => arr.length)
+      .filter(len => len === 2);
+
+    doubleClickStream.subscribe(event => {
+      label.textContent = 'double click';
+    });
+
+    doubleClickStream
+      .throttle(1000)
+      .subscribe(suggestion => {
+        label.textContent = '-';
+      })
+  </script>
+</body>
+</html>
