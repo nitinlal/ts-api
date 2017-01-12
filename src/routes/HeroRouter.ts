@@ -18,7 +18,7 @@ export class HeroRouter {
 
   public getAll(req: Request, res: Response, next: NextFunction) {
     res.set('Content-Type', 'application/json');
-    res.send(['superman', 'flash', 'Spiderman']);
+    res.send([1,2,3,5]);
   }
 
   init() {

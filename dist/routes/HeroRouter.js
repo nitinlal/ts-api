@@ -10,7 +10,7 @@ class HeroRouter {
     }
     getAll(req, res, next) {
         res.set('Content-Type', 'application/json');
-        res.send(['superman', 'flash', 'Spiderman']);
+        res.send([1, 2, 3, 5]);
     }
     init() {
         this.router.get('/', this.getAll);
