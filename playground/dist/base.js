@@ -10,3 +10,5 @@ class Base {
     }
 }
 exports.Base = Base;
+let base = Base;
+var ibase = IBase;
