@@ -29,6 +29,7 @@
     "jasmine": "^2.5.3",
     "karma": "^1.4.0",
     "mocha": "^3.2.0",
+    "npmlog": "^4.0.2",
     "require": "^2.4.20",
     "ts-node": "^1.6.1",
     "typescript": "^2.0.6"
